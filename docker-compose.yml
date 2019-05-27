@@ -1,0 +1,31 @@
+version: '3'
+services:
+  local-db:
+    image: mysql:5.7
+    container_name: local-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - TZ=Asia/Tokyo
+    networks:
+      - local-net
+    ports:
+      # Use 53306 and 53360 to avoid conflict port usage on the host machine.
+      - 53306:3306
+      - 53360:33060
+    # `--innodb_file_format=BARRACUDA --innodb_large_prefix=1` are usually necessary with utf8mb4 for large column size.
+    # Each table should also use 'InnoDB ROW_FORMAT=DYNAMIC' for database engine.
+    # https://stackoverflow.com/questions/30761867/mysql-error-the-maximum-column-size-is-767-bytes
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --innodb_file_format=BARRACUDA --innodb_large_prefix=1
+    volumes:
+      - mysql-data-volume:/var/lib/mysql
+
+volumes:
+  # Docker will create the volume for you.
+  # This volume persist as long as you are not executing `docker-compose down -v`.
+  mysql-data-volume:
+
+# Network is required to enable container access another container.
+networks:
+  local-net:
+    external: true
