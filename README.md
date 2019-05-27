@@ -40,10 +40,16 @@ docker-compose start
 ```
 
 ### Delete Container
-Deleting container without deleting the
+Deleting container. This command will preserve the database content.
 ```
 docker-compose down
 ```
+
+To delete the database content also, add `-v` option to delete it together.
+```
+docker-compose down -v
+```
+
 
 ## Connecting to MySQL on the Container
 ### Administrative User
