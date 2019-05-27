@@ -3,8 +3,8 @@ This is database container running MySQL 5.7.
 
 ## Controlling Database Container
 ### Create docker network
-If you have not created a docker network named `local-net`, create it with the command below.
-If you have, skip to "Start container" section.
+If you have not created a docker network named `local-net`, create it with the command below.  
+If you already have it, skip to "Create & Start Container" section.
 
 ```
 docker network create --driver bridge local-net
@@ -59,7 +59,7 @@ mysql -h 127.0.0.1 -P 53306 -u root -proot
 ```
 
 ### Connect from Other Container
-Below is the command to loing to mysql on the container from the other container.
+Below is the command to loing to mysql on the container from the other container.  
 The host name of the database container is `local-db`.
 ```
 mysql -h local-db -u root -proot
@@ -67,7 +67,7 @@ mysql -h local-db -u root -proot
 
 
 ## Creating Database
-Login to MySQL by either way of above.
+Login to MySQL by either way of above.  
 Create DB user and database for your project.
 
 Below is example SQL to
@@ -84,7 +84,7 @@ GRANT ALL PRIVILEGES ON `my_database`.* TO 'my_user'@'%';
 
 
 ## Backup Data for Development
-Example of taking backup of only rainlab_blog_posts table, only data, from local machine.
+Example of taking backup of only `rainlab_blog_posts` table, only data, from local machine.
 
 Example - backup:
 ```
