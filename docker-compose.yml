@@ -12,7 +12,8 @@ services:
     ports:
       # Use 53306 and 53360 to avoid conflict port usage on the host machine.
       - 53306:3306
-      - 53360:33060
+      # Map when we need to. Many port mapping reduces readability of `docker ps`.
+      #- 53360:33060
     # `--innodb_file_format=BARRACUDA --innodb_large_prefix=1` are usually necessary with utf8mb4 for large column size.
     # Each table should also use 'InnoDB ROW_FORMAT=DYNAMIC' for database engine.
     # https://stackoverflow.com/questions/30761867/mysql-error-the-maximum-column-size-is-767-bytes
