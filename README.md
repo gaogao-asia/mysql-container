@@ -1,5 +1,6 @@
 # Database Container
-This is database container running MySQL 5.7.
+This is database container running MySQL 5.7, intended to use for local
+development environment.
 
 ## Preparation
 Copy `.env.dist` to `.env`.
