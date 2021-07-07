@@ -1,9 +1,21 @@
 # Database Container
 This is database container running MySQL 5.7.
 
+## Preparation
+Copy `.env.dist` to `.env`.
+Change variables as you need.
+
+* DOCKER_VOLUME_DIR: Path to the directory where your database data will be
+  stored on the host machine so that it will not be deleted after the container
+  is deleted. The default is local-db directory at the root of this repo.
+* CONTAINER_NAME: The name used to refer this container from other container.
+* NETWORK_NAME: Other containers accessing this container should be on the
+  network of the same name.
+
 ## Controlling Database Container
 ### Create docker network
-If you have not created a docker network named `local-net`, create it with the command below.  
+If you have not created a docker network with the name specified in .env file,
+create it with the command below. Example uses `local-net` as its name.  
 If you already have it, skip to "Create & Start Container" section.
 
 ```
@@ -17,7 +29,7 @@ docker network ls
 
 If you want to remove the network, this is the command to do it.
 ```
-docker network rm <network_name>
+docker network rm local-net
 ```
 
 ### Create & Start Container
@@ -65,8 +77,8 @@ mysql -h 127.0.0.1 -P 53306 -u root -proot
 ```
 
 ### Connect from Other Container
-Below is the command to loing to mysql on the container from the other container.  
-The host name of the database container is `local-db`.
+Below is the command to log-in to mysql on the container from the other container.  
+The host name of the database container is as specified in .env file.
 ```
 mysql -h local-db -u root -proot
 ```
@@ -90,14 +102,14 @@ GRANT ALL PRIVILEGES ON `my_database`.* TO 'my_user'@'%';
 
 
 ## Backup Data for Development
-Example of taking backup of only `rainlab_blog_posts` table, only data, from local machine.
+Example of taking backup of only `blog_posts` table, only data, from local machine.
 
 Example - backup:
 ```
-$ mysqldump -h 127.0.0.1 -P 53306 -u root -proot -t octo rainlab_blog_posts > blog_posts_data_only_20180527.sql
+$ mysqldump -h 127.0.0.1 -P 53306 -u root -proot -t my_database blog_posts > blog_posts_data_only_20180527.sql
 ```
 
 Example - restore:
 ```
-mysql -h 127.0.0.1 -P 53306 -u root -proot octo < blog_posts_data_only_20180527.sql
+mysql -h 127.0.0.1 -P 53306 -u root -proot my_database < blog_posts_data_only_20180527.sql
 ```
