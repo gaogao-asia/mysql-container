@@ -1,4 +1,3 @@
-version: '3'
 services:
   local-db:
     image: mysql:5.7
